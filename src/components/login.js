@@ -20,9 +20,9 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { logindone, setlogindone } = useContext(UserContext);
-  const {loginsign, setloginsign} = useContext(UserContext);
-  const { user, setUser } = useContext(UserContext);
+  const {  setlogindone } = useContext(UserContext);
+  const {setloginsign} = useContext(UserContext);
+  const {  setUser } = useContext(UserContext);
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
   };

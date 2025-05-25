@@ -1,11 +1,10 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Login from './components/login';
 import SignupPage from './components/signup.js';
 import Dashboard from './components/dashboard.js';
 import { useState } from 'react';
-import { useContext } from 'react';
-import { createContext } from 'react';
+
 import UserContext from './allcontext.js';
 
 function App() {

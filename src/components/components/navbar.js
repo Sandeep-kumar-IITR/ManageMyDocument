@@ -9,8 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import UserContext from '../../allcontext';
 import { useContext } from 'react';
 export default function Navbar() {
-  const { user,setUser } = useContext(UserContext);
-  const {logindone, setlogindone} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+  const { setlogindone} = useContext(UserContext);
   const handlelogout = () => {
     setlogindone(0);
     setUser({});    

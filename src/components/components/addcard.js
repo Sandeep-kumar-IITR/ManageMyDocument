@@ -23,7 +23,7 @@ export default function AddCard() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const { createdoc, setCreatedoc } = useContext(UserContext);
+  const {  setCreatedoc } = useContext(UserContext);
 
   const userToken = user.access;
   const handleFormSubmit = async () => {

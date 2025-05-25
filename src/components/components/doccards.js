@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 import DocCard from './doccard';
 import UserContext from '../../allcontext';
-import { red } from '@mui/material/colors';
+// import { red } from '@mui/material/colors';
 
 export default function DocCards() {
   const { user, data, setData, createdoc } = useContext(UserContext);
@@ -34,7 +34,7 @@ export default function DocCards() {
     };
 
     fetchData();
-  }, [createdoc]);
+  }, [createdoc,user.access, setData]);
 
   return (
     <Box

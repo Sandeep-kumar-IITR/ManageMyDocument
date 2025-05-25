@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import {
   Box,
   Fab,
@@ -19,7 +19,7 @@ export default function Assistant() {
   const [messages, setMessages] = React.useState([]);
   const [input, setInput] = React.useState('');
   const {user} = useContext(UserContext);
-const [loading, setLoading] = React.useState(false);
+const [ loading , setLoading] = React.useState(false);
 
 const handleSend = async () => {
   if (!input.trim()) return;
