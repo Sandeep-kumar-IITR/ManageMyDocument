@@ -1,70 +1,148 @@
-# Getting Started with Create React App
+📄 ManageMyDocument – Frontend README (React + Netlify)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clean, friendly guide for both everyday users and developers.
 
-## Available Scripts
+✨ Overview
 
-In the project directory, you can run:
+ManageMyDocument (Frontend) is a React web app that lets users register/login, upload and manage documents (PDF/DOCX/TXT), and ask AI-powered questions about their documents. It talks to a Django REST API and uses Gemini + Hugging Face for Q&A enhancements.
 
-### `npm start`
+Live (Netlify): e.g., https://ManageMyDocument-frontend.netlify.app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Backend API (Render): e.g., https://ManageMyDocument-backend.onrender.com
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Replace the URLs above with your actual deployments.
 
-### `npm test`
+👤 For Non‑Technical Users
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open the website (Netlify URL above).
 
-### `npm run build`
+Register with your email and password.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Log in – the app keeps you signed in with a secure token.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Go to Documents → Upload to add a PDF/DOCX/TXT.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Click a document → Ask a Question to query its contents using AI.
 
-### `npm run eject`
+You can rename or delete documents anytime from the list.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+We never show other users’ files. Only you can see the documents you uploaded.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+🧑‍💻 For Developers
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Tech Stack
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+React 18 (Vite or CRA)
 
-## Learn More
+Auth: JWT (stored securely)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+API: Django REST backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+AI: Gemini (Google AI) + Hugging Face Inference API
 
-### Code Splitting
+Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Node.js ≥ 18 and npm/yarn/pnpm installed
 
-### Analyzing the Bundle Size
+Backend API running locally or on Render
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+API keys for Gemini & Hugging Face (if you proxy via backend, you may not need them on the client)
 
-### Making a Progressive Web App
+Quick Start (Local)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# 1) Clone
+git clone https://github.com/yourname/ManageMyDocument-frontend-git.git
+cd ManageMyDocument-frontend-git
 
-### Advanced Configuration
+# 2) Install deps
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# 3) Configure environment
+cp .env.example .env
+# edit .env to set API base URL etc.
 
-### Deployment
+# 4) Run
+npm run dev    # or npm start (CRA)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Environment Variables
 
-### `npm run build` fails to minify
+Create .env (do not commit it):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# API base (local or Render)
+VITE_API_BASE_URL=https://ManageMyDocument-backend.onrender.com
+
+# If the frontend calls AI directly (usually NOT recommended)
+VITE_GEMINI_API_KEY=your_gemini_key
+VITE_HF_API_KEY=your_huggingface_key
+
+Recommended: send AI requests through the backend so keys are never exposed in the browser.
+
+Project Scripts
+
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
+  }
+}
+
+API Usage From Frontend (Example)
+
+// src/services/api.ts
+const BASE = import.meta.env.VITE_API_BASE_URL;
+
+export async function login(email: string, password: string) {
+  const res = await fetch(`${BASE}/login/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  if (!res.ok) throw new Error('Login failed');
+  return res.json(); // { access: 'jwt', refresh?: 'jwt' }
+}
+
+Auth: Where JWT Lives
+
+Store access token in memory or in localStorage with rotation.
+
+Attach Authorization: Bearer <token> header to protected calls.
+
+Optionally implement refresh token flow if provided by backend.
+
+Build & Deploy (Netlify)
+
+Push your repo to GitHub.
+
+On Netlify → New site from Git → pick your repo.
+
+Build command: npm run build | Publish directory: dist (Vite) or build (CRA).
+
+Environment variables: add VITE_* from above in Site settings → Build & deploy → Environment.
+
+Redirects (optional): create _redirects to handle SPA routes:
+
+/*    /index.html   200
+
+Troubleshooting
+
+CORS errors: Ensure backend allows your Netlify domain in CORS settings.
+
+401 Unauthorized: Check that JWT header is attached; token not expired.
+
+Uploads fail: Verify backend /documents/ POST accepts multipart/form-data.
+
+AI not responding: Confirm backend keys configured and quotas available.
+
+UI/UX Notes
+
+Accessible forms, clear error states, and toasts for success/failure.
+
+Large files: show progress; limit size on client (e.g., 10–25MB) to avoid timeouts.
+
+License & Contributing
+
+Open an issue/PR on GitHub.
+
+Include commit messages like feat:, fix:, docs:.
