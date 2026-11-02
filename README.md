@@ -1,62 +1,53 @@
-# ManageMyDocument Frontend
+# ManageMyDocument — Frontend
 
-This is the **frontend** repository for the Document Management Portal with AI Integration.  
-Built using **React.js**, deployed on **Netlify**.
+React frontend for a document-management portal with authentication, document workflows and AI-assisted question answering.
 
----
+## Features
 
-## 🚀 Features
-- User registration & login (JWT authentication)
-- Dashboard for document management (upload, view, update, delete)
-- Ask AI questions about uploaded documents (Gemini + Hugging Face APIs)
-- Secure access: only authenticated users can manage their documents
+- User registration and login.
+- Authenticated document dashboard.
+- Upload, view, update and delete document workflows.
+- AI question-answering interface backed by the server API.
 
----
+## Architecture
 
-## 🛠️ Tech Stack
-- **React.js**
-- **Axios** (API communication)
-- **JWT Authentication**
-- **Netlify** (Hosting)
-
----
-
-## 📦 Installation (Local Development)
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ManageMyDocument-frontend.git
-   cd ManageMyDocument-frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start development server:
-   ```bash
-   npm start
-   ```
-
----
-
-## ⚙️ Environment Setup
-Create a `.env` file in the project root with the following:
-
-```env
-REACT_APP_BACKEND_URL=https://your-backend-url.onrender.com
-REACT_APP_GEMINI_API_KEY=your_gemini_api_key
-REACT_APP_HF_API_KEY=your_huggingface_api_key
+```mermaid
+flowchart LR
+    User[User] --> React[React application]
+    React -->|JWT-authenticated requests| API[Django REST backend]
+    API --> DB[(Application database)]
+    API --> AI[AI provider]
 ```
 
----
+## Technology
 
-## 🌐 Deployment
-- Hosted on **Netlify**  
-  URL: `https://ManageMyDocument-frontend.netlify.app`
+React · JavaScript · Axios · JWT · CSS / HTML
 
----
+## Local development
 
-## 📚 References
-- [React Docs](https://react.dev/)
-- [Netlify Deployment Guide](https://docs.netlify.com/)
+```bash
+git clone https://github.com/Sandeep-kumar-IITR/ManageMyDocument.git
+cd ManageMyDocument
+npm install
+npm start
+```
+
+The development server starts using the scripts defined in `package.json`.
+
+## Configuration
+
+Configure the backend base URL using the frontend environment-variable convention supported by this project (for Create React App, variables exposed to browser code use the `REACT_APP_` prefix).
+
+**Do not put Gemini, Hugging Face, database, or other private API keys in frontend environment variables.** Browser-exposed values are visible to users. Keep provider credentials on the backend and let the frontend call your authenticated API.
+
+## Related project
+
+- [ManageMyDoc backend](https://github.com/Sandeep-kumar-IITR/ManageMyDoc)
+
+## Deployment
+
+The original project notes mention Netlify hosting. Confirm the current deployment URL and environment configuration before relying on it; deployment availability is not verified here.
+
+## Author
+
+**Sandeep Kumar** · [GitHub](https://github.com/Sandeep-kumar-IITR)
